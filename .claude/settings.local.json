@@ -6,7 +6,10 @@
       "Bash(grep -E \"^[0-9]+\\\\.\\(jpg|jpeg|png|webp|avif\\)$\")",
       "Bash(git init *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(gh repo *)",
+      "Bash(vercel --version)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
       "/Users/gonzalo/Downloads/4ussieTrip"
