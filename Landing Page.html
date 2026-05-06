@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4ussieTrip — Perth → Brisbane 43 Days</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+:root {
+  --navy: #0d1f35;
+  --navy-mid: #1a3a5c;
+  --navy-light: #1a5490;
+  --amber: oklch(0.72 0.15 60);
+  --amber-dark: oklch(0.58 0.18 50);
+  --teal: oklch(0.70 0.12 195);
+  --teal-light: oklch(0.82 0.10 195);
+  --cream: #f5f0eb;
+  --warm-white: #faf7f3;
+  --gray-mid: #8a9ab0;
+  --gray-soft: #c8d3e0;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-body: 'Source Sans 3', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: var(--cream);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 3rem;
+  background: linear-gradient(to bottom, rgba(13,31,53,0.95) 0%, transparent 100%);
+  backdrop-filter: blur(6px);
+  transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+nav.scrolled {
+  background: rgba(13,31,53,0.98);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 1.2rem 3rem;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  text-decoration: none;
+  transition: font-size 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+nav.scrolled .nav-logo {
+  font-size: 1.4rem;
+}
+.nav-logo span { color: var(--amber); }
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--gray-soft);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--amber);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-links a:hover { color: var(--amber); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  background: var(--amber);
+  color: var(--navy);
+  padding: 0.55rem 1.4rem;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+}
+.nav-cta:hover { background: var(--amber-dark); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+.menu-toggle {
+  display: block;
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: 0 0 0 auto;
+  margin-right: 0.3rem;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.menu-toggle:active {
+  transform: scale(0.95);
+}
+.menu-toggle.open {
+  transform: rotate(90deg);
+}
+.nav-links {
+  display: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+.nav-links.mobile-open {
+  display: flex !important;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  background: linear-gradient(to bottom, rgba(13,31,53,0.98) 0%, rgba(13,31,53,0.95) 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 0.5rem 1rem;
+  gap: 0;
+  z-index: 99;
+  max-height: calc(100vh - 56px);
+  opacity: 1;
+  animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.nav-links.mobile-open li {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: both;
+}
+.nav-links.mobile-open li:nth-child(1) { animation-delay: 0.05s; }
+.nav-links.mobile-open li:nth-child(2) { animation-delay: 0.1s; }
+.nav-links.mobile-open li:nth-child(3) { animation-delay: 0.15s; }
+.nav-links.mobile-open li:last-child {
+  border-bottom: none;
+}
+.nav-links.mobile-open a {
+  display: block;
+  padding: 0.75rem 0;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-links.mobile-open a:active {
+  color: var(--amber);
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── HERO ── */
+#hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 3rem 0;
+  overflow: hidden;
+}
+#hero > *:not(.hero-bg):not(.hero-scroll) {
+  transform: translateY(-4vh);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(13,31,53,0.92) 0%, rgba(13,31,53,0.4) 50%, rgba(13,31,53,0.2) 100%),
+    url('https://images.unsplash.com/photo-1587139223877-04cb899fa3e8?w=1800&q=80') center/cover no-repeat;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 40%, rgba(26,84,144,0.15) 0%, transparent 60%);
+}
+.hero-tag {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 12vw, 11rem);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+  text-wrap: pretty;
+  margin-bottom: 1.5rem;
+}
+.hero-title .arrow {
+  color: var(--amber);
+  margin: 0 0.15em;
+}
+.hero-sub {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-style: italic;
+  color: var(--teal-light);
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.02em;
+}
+.hero-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 3.2vw, 2.4rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 2rem;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  animation: fadeUp 1.1s ease 0.5s both;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+}
+.hero-headline strong {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--amber);
+  font-family: var(--font-display);
+  font-size: 1.5em;
+  letter-spacing: 0.06em;
+  display: block;
+  line-height: 1;
+}
+.hero-pills {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  justify-content: center;
+}
+.pill {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--cream);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+}
+.hero-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2.5rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 4px;
+  padding: 1rem 1.8rem;
+  width: fit-content;
+  animation: fadeUp 1.2s ease 0.6s both;
+}
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0 1.6rem;
+}
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--amber);
+}
+.hero-stat-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gray-soft);
+}
+.hero-stat-divider {
+  width: 1px;
+  height: 2.5rem;
+  background: rgba(255,255,255,0.12);
+  flex-shrink: 0;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 1.3s ease 0.8s both;
+}
+.btn-primary {
+  background: var(--amber);
+  color: var(--navy);
+  padding: 0.9rem 2.2rem;
+  border-radius: 2px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-primary:hover { background: var(--amber-dark); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+.btn-outline {
+  background: transparent;
+  color: var(--cream);
+  padding: 0.9rem 2.2rem;
+  border-radius: 2px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  transition: all 0.2s;
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-outline:hover { border-color: var(--teal); color: var(--teal-light); }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gray-mid);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, transparent, var(--amber));
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ── SECTION SHARED ── */
+section { padding: 6rem 3rem; }
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--amber);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--cream);
+  margin-bottom: 1rem;
+}
+.section-desc {
+  font-size: 1.05rem;
+  color: var(--gray-mid);
+  max-width: 600px;
+  line-height: 1.7;
+}
+
+/* ── TOUR OVERVIEW ── */
+#overview {
+  background: var(--navy);
+  padding: 5rem 0 6rem;
+}
+#overview .inner {
+  padding: 0 3rem;
+}
+.tour-sections {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+.tour-section-block {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.tour-section-block.reverse {
+  grid-template-columns: 1fr 300px;
+}
+.tour-section-block.reverse .section-info { order: 2; }
+.tour-section-block.reverse .carousel-wrap { order: 1; }
+
+.section-info {
+  position: sticky;
+  top: 7rem;
+}
+.sec-num {
+  font-family: var(--font-display);
+  font-size: 6rem;
+  line-height: 1;
+  color: rgba(255,255,255,0.05);
+  letter-spacing: 0.05em;
+  margin-bottom: -1rem;
+}
+.sec-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 2px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+.badge-orange { background: #c04b00; color: #ffe5cc; }
+.badge-blue   { background: #0a3d6b; color: #b3d4f5; border: 1px solid #1a5490; }
+.badge-green  { background: #0a4d35; color: #b3f0d4; }
+.badge-yellow { background: #5a4200; color: #ffe4a0; }
+
+.sec-title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  margin-bottom: 0.4rem;
+}
+.sec-duration {
+  font-size: 0.8rem;
+  color: var(--amber);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.sec-desc {
+  font-size: 0.9rem;
+  color: var(--gray-mid);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+.sec-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sec-highlights li {
+  list-style: none;
+  font-size: 0.82rem;
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.sec-highlights li::before {
+  content: '→';
+  color: var(--teal);
+  font-weight: 700;
+}
+
+/* ── CAROUSEL ── */
+.carousel-wrap {
+  position: relative;
+  overflow: hidden;
+}
+.carousel {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+  scroll-margin: 0;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.carousel::-webkit-scrollbar { display: none; }
+.car-slide {
+  flex: 0 0 calc(50% - 0.375rem);
+  min-width: 240px;
+  scroll-snap-align: start;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  cursor: default;
+  aspect-ratio: 4/3;
+}
+.car-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+.car-slide:hover img { transform: scale(1.06); }
+.car-slide .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,31,53,0.85) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+.car-slide:hover .overlay { opacity: 1; }
+.car-slide .overlay .place {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+}
+.car-slide .overlay .date {
+  font-size: 0.72rem;
+  color: var(--amber);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+/* IMG PLACEHOLDER */
+.img-ph {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  background: var(--navy-mid);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: var(--gray-mid);
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+}
+.img-ph-inner {
+  background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,0.02) 8px, rgba(255,255,255,0.02) 16px);
+  position: absolute;
+  inset: 0;
+}
+
+/* ── HIGHLIGHTS ── */
+#highlights {
+  background: linear-gradient(180deg, var(--navy) 0%, #0a1929 100%);
+}
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.highlight-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+  background: var(--navy-mid);
+}
+.highlight-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+.highlight-card:hover img { transform: scale(1.07); }
+.highlight-card .hl-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,25,41,0.9) 0%, transparent 55%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.2rem;
+  transition: background 0.3s;
+}
+.highlight-card:hover .hl-overlay {
+  background: linear-gradient(to top, rgba(10,25,41,0.97) 0%, rgba(10,25,41,0.3) 100%);
+}
+.hl-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  margin-bottom: 0.3rem;
+}
+.hl-desc {
+  font-size: 0.8rem;
+  color: var(--gray-soft);
+  line-height: 1.5;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s;
+  opacity: 0;
+}
+.highlight-card:hover .hl-desc { max-height: 5rem; opacity: 1; }
+.hl-tag {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.4rem;
+}
+
+/* ── ITINERARY ── */
+#itinerary {
+  background: #08162a;
+  padding: 6rem 0;
+}
+#itinerary .inner {
+  padding: 0 3rem;
+}
+.itinerary-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  margin-bottom: 3rem;
+}
+.section-filter {
+  display: flex;
+  gap: 0.5rem;
+}
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 2px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: var(--gray-mid);
+  transition: all 0.2s;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.filter-btn.active, .filter-btn:hover { background: var(--navy-light); border-color: var(--navy-light); color: var(--cream); }
+
+.timeline {
+  position: relative;
+  padding-left: 2.5rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom,
+    #c04b00 0%,
+    #c04b00 25.6%,
+    #0a3d6b 25.6%,
+    #0a3d6b 48.8%,
+    #0a4d35 48.8%,
+    #0a4d35 71.8%,
+    #5a4200 71.8%,
+    #5a4200 100%);
+  opacity: 0.75;
+}
+.timeline-section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0 1.5rem;
+  position: relative;
+}
+.timeline-section-header::before {
+  content: '';
+  position: absolute;
+  left: -1.99rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--amber);
+  border: 3px solid var(--navy);
+  box-shadow: 0 0 0 6px rgba(255,180,60,0.25), 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 2;
+  margin-left: -10px;
+}
+.timeline-sec-label {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.timeline-sec-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(255,255,255,0.1), transparent);
+}
+
+.timeline-day {
+  display: grid;
+  grid-template-columns: 80px 120px 1fr;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 4px;
+  padding-right: 1rem;
+}
+.timeline-day:hover { background: rgba(255,255,255,0.03); }
+.timeline-day-image {
+  grid-column: 1 / -1;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  overflow: hidden;
+  aspect-ratio: 16/10;
+  display: none;
+}
+.timeline-day-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.timeline-day:hover .timeline-day-image img {
+  transform: scale(1.05);
+}
+.timeline-day::before {
+  display: none;
+}
+.day-date {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+  line-height: 1.2;
+  font-weight: 700;
+}
+.day-date .month {
+  font-size: 0.85rem;
+  color: var(--gray-mid);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+.day-thumb {
+  width: 120px;
+  height: 72px;
+  border-radius: 3px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.day-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.timeline-day:hover .day-thumb img { transform: scale(1.08); }
+.day-info {}
+.day-route {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  margin-bottom: 0.15rem;
+}
+.day-desc {
+  font-size: 0.78rem;
+  color: var(--gray-mid);
+  line-height: 1.5;
+}
+
+/* ── CTA ── */
+#cta {
+  background: linear-gradient(135deg, var(--navy-mid) 0%, #0a2847 50%, #0d1f35 100%);
+  text-align: center;
+  padding: 7rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+#cta::before {
+  content: 'AUSTRALIA';
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 18vw;
+  color: rgba(255,255,255,0.02);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.cta-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1rem;
+}
+.cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--cream);
+  margin-bottom: 1.5rem;
+}
+.cta-sub {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--gray-soft);
+  margin-bottom: 3rem;
+}
+.cta-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-teal {
+  background: var(--teal);
+  color: var(--navy);
+  padding: 1rem 2.5rem;
+  border-radius: 2px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-teal:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+.departure-info {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  flex-wrap: nowrap;
+}
+.dep-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.dep-value {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--amber);
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  line-height: 1;
+}
+.dep-label {
+  font-size: 0.75rem;
+  color: var(--gray-mid);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: #060f1d;
+  padding: 4rem 3rem 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+.footer-brand .logo {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+  color: var(--cream);
+  margin-bottom: 1rem;
+  display: block;
+}
+.footer-brand .logo span { color: var(--amber); }
+.footer-brand p {
+  font-size: 0.85rem;
+  color: var(--gray-mid);
+  line-height: 1.7;
+  max-width: 280px;
+  margin-bottom: 1.5rem;
+}
+.social-links {
+  display: flex;
+  gap: 0.75rem;
+}
+.social-btn {
+  width: 2.2rem;
+  height: 2.2rem;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-mid);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.social-btn:hover { background: var(--amber); border-color: var(--amber); color: var(--navy); }
+.footer-col h4 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 1.2rem;
+}
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.footer-col ul a {
+  font-size: 0.85rem;
+  color: var(--gray-mid);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-col ul a:hover { color: var(--amber); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-bottom p {
+  font-size: 0.75rem;
+  color: var(--gray-mid);
+}
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,15,29,0.95);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-img-wrap {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+}
+.modal-img-wrap img {
+  max-width: 90vw;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.modal-caption {
+  margin-top: 1rem;
+  text-align: center;
+}
+.modal-caption h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--cream);
+  letter-spacing: 0.08em;
+}
+.modal-caption p {
+  font-size: 0.82rem;
+  color: var(--gray-mid);
+  margin-top: 0.25rem;
+}
+.modal-close {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: var(--gray-mid);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modal-close:hover { color: var(--amber); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7), 0 8px 24px rgba(0, 0, 0, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 15px rgba(245, 158, 11, 0), 0 8px 24px rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0), 0 8px 24px rgba(0, 0, 0, 0.3);
+    transform: scale(1);
+  }
+}
+.btn-pulse {
+  animation: pulse-glow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.btn-pulse:hover {
+  animation: none;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── ABOUT SECTION ── */
+.about-section {
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.about-card {
+  background: rgba(26, 58, 92, 0.5);
+  border: 1px solid rgba(130, 180, 220, 0.2);
+  border-radius: 4px;
+  padding: 2rem;
+  backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.about-card:hover {
+  border-color: rgba(130, 180, 220, 0.5);
+  background: rgba(26, 58, 92, 0.7);
+  transform: translateY(-4px);
+}
+.about-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  color: var(--amber);
+  margin-bottom: 1rem;
+}
+.about-card p {
+  color: var(--gray-soft);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+.highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.highlights span,
+.entry-points span,
+.amenities span {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--amber);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.entry-points,
+.amenities {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.amenities span {
+  text-align: left;
+}
+.cta-small {
+  color: var(--teal-light);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .tour-section-block,
+  .tour-section-block.reverse {
+    grid-template-columns: 1fr;
+  }
+  .tour-section-block.reverse .section-info { order: unset; }
+  .tour-section-block.reverse .carousel-wrap { order: unset; }
+  .section-info { position: static; }
+  .highlights-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-top { grid-template-columns: 1fr auto; }
+  .itinerary-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .section-filter {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .highlights-grid { grid-template-columns: 1fr; }
+  .hero-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-primary, .btn-outline {
+    width: 100%;
+  }
+  .departure-info {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  nav { padding: 1rem 1.25rem; }
+  .nav-logo { font-size: 1.3rem; }
+  .nav-links { display: none; }
+  .menu-toggle { display: block; }
+  .cta-btns {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .btn-teal {
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+  }
+}
+@media (max-width: 600px) {
+  section { padding: 3rem 1.25rem; }
+  #hero { padding: 0 1.25rem 3.5rem; min-height: 600px; }
+  #hero > *:not(.hero-bg):not(.hero-scroll) {
+    transform: translateY(-2vh);
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    margin-bottom: 1rem;
+  }
+  .hero-headline {
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    margin-bottom: 1.5rem;
+  }
+  .hero-headline strong {
+    font-size: 1.2em;
+  }
+  .hero-stats {
+    flex-direction: row;
+    gap: 0;
+    padding: 0.8rem 1rem;
+    width: fit-content;
+    margin: 0 auto 1.5rem;
+  }
+  .hero-stat {
+    padding: 0 0.6rem;
+  }
+  .hero-stat-divider {
+    width: 1px;
+    height: 2rem;
+    margin: 0 0.4rem;
+  }
+  .hero-stat-num { font-size: 1.8rem; }
+
+  nav {
+    padding: 0.8rem 1rem;
+  }
+  .nav-logo {
+    font-size: 1.1rem;
+    flex: 1;
+  }
+  .nav-cta {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.65rem;
+  }
+  .nav-links { display: none; }
+  .menu-toggle { display: block; }
+
+  .highlights-grid { grid-template-columns: 1fr; }
+  .timeline-day {
+    grid-template-columns: 60px 1fr;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    align-items: flex-start;
+  }
+  .day-thumb { display: none; }
+  .timeline-day-image { display: block; }
+  .day-date {
+    font-size: 2rem;
+  }
+  .day-route {
+    font-size: 0.95rem;
+  }
+  .day-desc {
+    font-size: 0.7rem;
+  }
+
+  .footer-top { grid-template-columns: 1fr; gap: 1.5rem; }
+  .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+  .footer-brand { max-width: 100%; }
+  .footer-brand .logo { font-size: 1.5rem; }
+  .footer-brand p { max-width: 100%; }
+
+  .section-title {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+  }
+  .sec-title {
+    font-size: 1.6rem;
+  }
+  .sec-num {
+    font-size: 3.5rem;
+    margin-bottom: -0.5rem;
+  }
+
+  .car-slide {
+    flex: 0 0 calc(100% - 0.375rem);
+    min-width: 280px;
+  }
+
+  .filter-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.65rem;
+  }
+
+  .joining-btn,
+  .btn-primary,
+  .btn-outline {
+    min-height: 44px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.75rem;
+  }
+
+  .cta-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  .cta-sub {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .car-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+  }
+
+  .sec-num {
+    font-size: 2.5rem;
+  }
+
+  #itinerary {
+    padding: 4rem 0;
+  }
+
+  #cta {
+    padding: 4rem 1.25rem;
+  }
+  #cta::before {
+    font-size: 12vw;
+    top: 55%;
+  }
+}
+</style>
+</head>
+
+<body>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">4<span>ussie</span>Trip</a>
+  <button class="menu-toggle" id="menuToggle">☰</button>
+  <ul class="nav-links" id="navMenu">
+    <li><a href="#overview">The Tour</a></li>
+    <li><a href="#itinerary">Itinerary</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#cta">Join Us</a></li>
+  </ul>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSdYL_bvD-zfFg1Vd6qRHI7vJEf0zgJw23i0zZLa9hLtRp6FfA/viewform?usp=sharing&ouid=108521149626662395365" class="nav-cta btn-pulse" target="_blank">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tag">
+</div>
+  <h1 class="hero-title">PERTH<span class="arrow">→</span>BRISBANE</h1>
+  <p class="hero-headline">Join the best<br><strong>ROADTRIP IN AUSTRALIA</strong></p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">43</span>
+      <span class="hero-stat-label">Days</span>
+    </div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">4</span>
+      <span class="hero-stat-label">Phases</span>
+    </div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">5</span>
+      <span class="hero-stat-label">Spots</span>
+    </div>
+  </div>
+  <div class="hero-btns">
+    <a href="#overview" class="btn-primary">Explore the Trip</a>
+    <a href="#itinerary" class="btn-outline">View Itinerary</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- React App Mount -->
+<div id="app-root"></div>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script type="text/babel">
+
+
+const { useState, useEffect, useRef, useCallback } = React;
+
+// ── DATA ────────────────────────────────────────────────
+const TOUR_SECTIONS = [
+{
+  id: 1,
+  label: "PHASE 1",
+  badge: "badge-orange",
+  title: "PERTH → BROOME",
+  duration: "11 Days · Jun 15–25",
+  desc: "From cosmopolitan Perth, travel along the turquoise coast of Coral Bay, swim with whale sharks in Exmouth, explore the depths of Karijini and arrive at the iconic Cable Beach.",
+  highlights: ["Whale Shark Tours in Exmouth", "Coral Bay snorkelling", "Karijini National Park", "Camel sunset at Cable Beach"],
+  slides: [
+  { img: "./2.jpg"},
+  { img: "./5.jpg"},
+  { img: "./6.jpg"},
+  { img: "./7.jpg"},
+  { img: "./8.jpg"},
+  { img: "./9.jpg"}]
+
+},
+{
+  id: 2,
+  label: "PHASE 2",
+  badge: "badge-blue",
+  title: "BROOME → DARWIN",
+  duration: "10 Days · Jun 26–Jul 5",
+  desc: "The adventure intensifies along the iconic Gibb River Road, mysterious Tunnel Creek, the striped domes of the Bungle Bungles, vast Lake Argyle and the ancestral magic of Kakadu.",
+  highlights: ["Bungle Bungles 4WD", "Gibb River Road", "Kakadu National Park", "Aboriginal Rock Art"],
+  slides: [
+  { img: "./11.jpg"},
+  { img: "./13.jpg"},
+  { img: "./15.jpg"},
+  { img: "./17.jpg"},
+  { img: "./18.jpg"},
+  { img: "./19.jpg"}]
+
+},
+{
+  id: 3,
+  label: "PHASE 3",
+  badge: "badge-green",
+  title: "DARWIN → CAIRNS",
+  duration: "10 Days · Jul 6–15",
+  desc: "From the waterfalls of Litchfield, cross the Outback to the Undara lava tubes, the pristine Daintree Rainforest and the ultimate experience: diving the Great Barrier Reef.",
+  highlights: ["Great Barrier Reef Scuba", "Daintree Rainforest", "Undara Lava Tubes", "Litchfield National Park"],
+  slides: [
+  { img: "./25.jpg"},
+  { img: "./26.jpg"},
+  { img: "./28.jpg"},
+  { img: "./30.jpg"},
+  { img: "./33.jpg"},
+  { img: "./31.jpg"}]
+
+},
+{
+  id: 4,
+  label: "PHASE 4",
+  badge: "badge-yellow",
+  title: "CAIRNS → BRISBANE",
+  duration: "12 Days · Jul 16–27",
+  desc: "The final leg covers the Kuranda Skyrail canopy, paradise Magnetic Island, a helicopter flight over the Whitsundays, 4WD across Fraser Island and Noosa's beaches before the grand finale in Brisbane.",
+  highlights: ["Whitsundays helicopter", "Fraser Island 4WD", "Koalas at Magnetic Island", "Noosa Heads beaches"],
+  slides: [
+  { img: "./38.jpg"},
+  { img: "./39.jpg"},
+  { img: "./40.jpg"},
+  { img: "./41.jpg"},
+  { img: "./42.jpg"},
+  { img: "./43.jpg"}]
+
+}];
+
+
+const HIGHLIGHTS_DATA = [
+{ title: "Whale Shark Tours", tag: "Exmouth · Jun 20", desc: "Nada junto a los tiburones ballena más grandes del mundo en Ningaloo Reef.", img: "https://images.unsplash.com/photo-1578469645742-46cae010e5d4?w=700&q=80" },
+{ title: "Bungle Bungles 4WD", tag: "Purnululu · Jul 1", desc: "Formaciones de arenisca a rayas que parecen de otro planeta.", img: "https://images.unsplash.com/photo-1529108190281-9a4f620bc2d8?w=700&q=80" },
+{ title: "Great Barrier Reef", tag: "Cairns · Jul 14", desc: "El mayor arrecife de coral del mundo, buceo y snorkel de ensueño.", img: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80" },
+{ title: "Fraser Island 4x4", tag: "Queensland · Jul 23", desc: "La isla de arena más grande del mundo, solo accesible en 4WD.", img: "https://images.unsplash.com/photo-1540202403-b7abd6747a18?w=700&q=80" },
+{ title: "Whitsundays Aéreo", tag: "Airlie Beach · Jul 20", desc: "Sobrevuela en helicóptero las míticas playas blancas de los Whitsundays.", img: "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=700&q=80" },
+{ title: "Koalas & Wildlife", tag: "Magnetic Island · Jul 18", desc: "Avista koalas salvajes y dalias en su hábitat natural.", img: "https://images.unsplash.com/photo-1576186726115-4d51596775d1?w=700&q=80" },
+{ title: "Daintree Rainforest", tag: "Cape Tribulation · Jul 13", desc: "La selva tropical más antigua del mundo, Patrimonio de la Humanidad.", img: "https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=700&q=80" },
+{ title: "Kakadu National Park", tag: "Top End · Jul 4", desc: "Arte rupestre aborigen de 20.000 años y biodiversidad sin igual.", img: "https://images.unsplash.com/photo-1576482199575-f2b7e193b0a2?w=700&q=80" },
+{ title: "Camels at Sunset", tag: "Cable Beach · Jun 25", desc: "El atardecer más icónico de Australia: camellos en Cable Beach Broome.", img: "https://images.unsplash.com/photo-1598439210625-5067c578f3f6?w=700&q=80" }];
+
+
+const ITINERARY = [
+// Imágenes específicas de cada destino del itinerario
+{ section: 1, day: "Jun 15", route: "Perth → Kalbarri", desc: "Arrive in Perth, first stop at the red cliffs of Kalbarri.", img: "./1.jpg" },
+{ section: 1, day: "Jun 16", route: "Kalbarri → Shark Bay", desc: "Kalbarri National Park and drive to the iconic Shark Bay.", img: "./2.jpg" },
+{ section: 1, day: "Jun 17", route: "Monkey Mia → Carnarvon", desc: "Wild dolphins at Monkey Mia, Shell Beach with millions of shells.", img: "./3.jpg" },
+{ section: 1, day: "Jun 18", route: "Carnarvon → Coral Bay", desc: "First glimpse of Ningaloo Reef from the beach at Coral Bay.", img: "./4.jpg" },
+{ section: 1, day: "Jun 19", route: "Coral Bay → Exmouth", desc: "Snorkelling at Turquoise Bay, underwater canyons of Cape Range.", img: "./5.jpg" },
+{ section: 1, day: "Jun 20", route: "Whale Shark Tour", desc: "The most anticipated day: swim with whale sharks at Ningaloo.", img: "./6.jpg" },
+{ section: 1, day: "Jun 21", route: "Cape Range NP", desc: "Turquoise Bay and the world's largest swim-accessible coral reef.", img: "./7.jpg" },
+{ section: 1, day: "Jun 22", route: "Exmouth → Tom Price", desc: "Into the Pilbara, the red heart of Western Australia.", img: "./8.jpg" },
+{ section: 1, day: "Jun 23", route: "Tom Price → Karijini", desc: "Gorges up to 100m deep in Karijini National Park.", img: "./9.jpg" },
+{ section: 1, day: "Jun 24", route: "Karijini → Port Hedland", desc: "Hamersley Gorge and Oxers Lookout before Port Hedland.", img: "./10.jpg" },
+{ section: 1, day: "Jun 25", route: "Port Hedland → Broome", desc: "80 Mile Beach and camel sunset ride at Cable Beach.", img: "./11.jpg" },
+{ section: 2, day: "Jun 26", route: "Broome → Derby", desc: "Start of the Gibb River Road, boab trees and Kimberley landscape.", img: "./12.jpg" },
+{ section: 2, day: "Jun 27", route: "Windjana Gorge", desc: "Freshwater crocodiles and rock art at Windjana Gorge.", img: "./13.jpg" },
+{ section: 2, day: "Jun 28", route: "Tunnel Creek", desc: "Explore Australia's oldest cave by torchlight through ankle-deep water.", img: "./14.jpg" },
+{ section: 2, day: "Jun 29", route: "Gibb River Road", desc: "The central stretch of the legendary 4WD track between cattle stations.", img: "./15.jpg" },
+{ section: 2, day: "Jun 30", route: "Lake Argyle", desc: "Australia's largest reservoir, dawn kayak between islands.", img: "./16.jpg" },
+{ section: 2, day: "Jul 1", route: "Bungle Bungles", desc: "Hiking among the striped sandstone domes of Purnululu National Park.", img: "./17.jpg" },
+{ section: 2, day: "Jul 2", route: "Purnululu → Kununurra", desc: "Free afternoon in Kununurra, a fisherman's paradise.", img: "./18.jpg" },
+{ section: 2, day: "Jul 3", route: "Kununurra → Katherine", desc: "Cross into the Northern Territory, Katherine Gorge and its 13 gorges.", img: "./19.jpg" },
+{ section: 2, day: "Jul 4", route: "Kakadu National Park", desc: "Nourlangie rock art and Yellow Water Billabong cruise.", img: "./20.jpg" },
+{ section: 2, day: "Jul 5", route: "Kakadu → Darwin", desc: "Final corners of Kakadu and arrival at the Darwin Waterfront.", img: "./21.jpg" },
+{ section: 3, day: "Jul 6", route: "Darwin → Litchfield", desc: "Litchfield NP: Wangi waterfalls and giant magnetic termite mounds.", img: "./22.jpg" },
+{ section: 3, day: "Jul 7", route: "Litchfield → Mataranka", desc: "Crystal-clear thermal springs at Mataranka.", img: "./23.jpg" },
+{ section: 3, day: "Jul 8", route: "Mataranka → Tennant Creek", desc: "Devils Marbles: mysterious granite boulders in the Outback.", img: "./24.jpg" },
+{ section: 3, day: "Jul 9", route: "Tennant → Mt. Isa", desc: "Cross into Queensland, Mount Isa and its mining history.", img: "./25.jpg" },
+{ section: 3, day: "Jul 10", route: "Mt. Isa → Undara", desc: "Undara lava tubes: the longest in the world.", img: "./26.jpg" },
+{ section: 3, day: "Jul 11", route: "Undara → Atherton", desc: "Atherton Tablelands: waterfalls, platypus and coffee farms.", img: "./27.jpg" },
+{ section: 3, day: "Jul 12", route: "Atherton → Port Douglas", desc: "Spectacular descent to the tropical coast, colonial Port Douglas.", img: "./28.jpg" },
+{ section: 3, day: "Jul 13", route: "Daintree Rainforest", desc: "Cape Tribulation: where the world's oldest rainforest meets the sea.", img: "./29.jpg" },
+{ section: 3, day: "Jul 14", route: "Great Barrier Reef", desc: "Full day diving and snorkelling on the Great Barrier Reef.", img: "./30.jpg" },
+{ section: 3, day: "Jul 15", route: "Fitzroy Island → Cairns", desc: "Snorkelling at Fitzroy Island and arrival celebration in Cairns.", img: "./31.jpg" },
+{ section: 4, day: "Jul 16", route: "Cairns → Kuranda", desc: "Skyrail over the rainforest canopy, local Kuranda markets.", img: "./32.jpg" },
+{ section: 4, day: "Jul 17", route: "Mission Beach", desc: "Skydiving over the Great Barrier Reef and Etty Bay beach.", img: "./33.jpg" },
+{ section: 4, day: "Jul 18", route: "Magnetic Island", desc: "Wild koalas and snorkelling in the calm bays of Magnetic Island.", img: "./34.jpg" },
+{ section: 4, day: "Jul 19", route: "Townsville → Bowen", desc: "Coastal drive with views across the Coral Sea islands.", img: "./35.jpg" },
+{ section: 4, day: "Jul 20", route: "Airlie Beach · Whitsundays", desc: "Helicopter over Whitehaven Beach, sailing between islands.", img: "./36.jpg" },
+{ section: 4, day: "Jul 21", route: "Whitsundays Cruise", desc: "Full day sailing among the 74 islands of the Whitsundays.", img: "./37.jpg" },
+{ section: 4, day: "Jul 22", route: "Airlie → Eungella NP", desc: "Eungella: Australia's best spot to see a wild platypus.", img: "./38.jpg" },
+{ section: 4, day: "Jul 23", route: "Fraser Island 4WD", desc: "Lake McKenzie, Maheno Shipwreck and sand dunes on K'gari.", img: "./39.jpg" },
+{ section: 4, day: "Jul 24", route: "Fraser Island Day 2", desc: "Eli Creek, Rainbow Beach and exploration of the interior.", img: "./40.jpg" },
+{ section: 4, day: "Jul 25", route: "Fraser → Noosa", desc: "Noosa Heads: beaches, markets and Noosa National Park.", img: "./41.jpg" },
+{ section: 4, day: "Jul 26", route: "Sunshine Coast", desc: "Mooloolaba beach, Australia Zoo and Glass House Mountains.", img: "./42.jpg" },
+{ section: 4, day: "Jul 27", route: "Brisbane — FINAL", desc: "Arrival in Brisbane. 43 days, 7,000 km, adventure complete.", img: "./43.jpg" }];
+
+
+
+// ── CAROUSEL COMPONENT ──────────────────────────────────
+function Carousel({ slides, id }) {
+  const ref = useRef(null);
+  const [modal, setModal] = useState(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    let scrollPos = 0;
+    let isAutoScrolling = true;
+    let animationId = null;
+    const scrollSpeed = 1.5; // píxeles por frame
+    let lastScrollLeft = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const autoScroll = () => {
+      if (isAutoScrolling) {
+        scrollPos += scrollSpeed;
+        el.scrollLeft = scrollPos;
+
+        // Loop infinito: si llegamos al final, reinicia suavemente
+        if (scrollPos >= el.scrollWidth - el.clientWidth - 5) {
+          scrollPos = 0;
+        }
+      }
+
+      lastScrollLeft = el.scrollLeft;
+      animationId = requestAnimationFrame(autoScroll);
+    };
+
+    // Prevenir scroll manual manteniendo la posición
+    const handleScroll = (e) => {
+      if (Math.abs(el.scrollLeft - lastScrollLeft) > 2) {
+        el.scrollLeft = lastScrollLeft;
+      }
+    };
+
+    // Registrar punto inicial del toque
+    const handleTouchStart = (e) => {
+      if (e.touches && e.touches.length > 0) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+      isAutoScrolling = false;
+    };
+
+    // Prevenir solo scroll horizontal (izq/der)
+    const handleTouchMove = (e) => {
+      if (!e.touches || e.touches.length === 0) return;
+
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+
+      const diffX = Math.abs(currentX - touchStartX);
+      const diffY = Math.abs(currentY - touchStartY);
+
+      // Solo prevenir si es movimiento horizontal (izq/der) más que vertical
+      if (diffX > diffY + 10) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = () => {
+      setTimeout(() => {
+        isAutoScrolling = true;
+      }, 2000);
+    };
+
+    const handleWheel = (e) => {
+      // Solo bloquear scroll horizontal, permitir vertical
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+      }
+    };
+
+    el.addEventListener('scroll', handleScroll, false);
+    el.addEventListener('touchstart', handleTouchStart);
+    el.addEventListener('touchend', handleTouchEnd);
+    el.addEventListener('touchmove', handleTouchMove, { passive: false });
+    el.addEventListener('wheel', handleWheel, { passive: false });
+
+    animationId = requestAnimationFrame(autoScroll);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      el.removeEventListener('scroll', handleScroll);
+      el.removeEventListener('touchstart', handleTouchStart);
+      el.removeEventListener('touchend', handleTouchEnd);
+      el.removeEventListener('touchmove', handleTouchMove);
+      el.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
+  return (
+    <div className="carousel-wrap">
+      <div className="carousel" ref={ref}>
+        {slides.map((s, i) =>
+        <div key={i} className="car-slide">
+            <img src={s.img} alt="phase slide" loading="lazy" />
+          </div>
+        )}
+      </div>
+    </div>);
+
+}
+
+// ── TOUR OVERVIEW SECTION ───────────────────────────────
+function TourOverview() {
+  return (
+    <section id="overview">
+      <div className="inner">
+        <div className="section-label">The Full Route</div>
+        <h2 className="section-title">4 PHASES</h2>
+        <p className="section-desc">7,000 kilometres of road, 43 days of adventure, one life to live it.</p>
+        <div className="tour-sections">
+          {TOUR_SECTIONS.map((sec, idx) =>
+          <div key={sec.id} className={`tour-section-block reveal ${idx % 2 === 1 ? 'reverse' : ''}`}>
+              <div className="section-info">
+                <div className="sec-num">0{sec.id}</div>
+                <div className={`sec-badge ${sec.badge}`}>{sec.label}</div>
+                <h3 className="sec-title">{sec.title}</h3>
+                <div className="sec-duration">{sec.duration}</div>
+                <p className="sec-desc">{sec.desc}</p>
+                <ul className="sec-highlights">
+                  {sec.highlights.map((h, i) => <li key={i}>{h}</li>)}
+                </ul>
+              </div>
+              <Carousel slides={sec.slides} id={sec.id} />
+            </div>
+          )}
+        </div>
+      </div>
+    </section>);
+
+}
+
+// ── HIGHLIGHTS SECTION — REMOVED ──────────────────────
+function Highlights() {return null;}
+
+// ── ITINERARY SECTION ───────────────────────────────────
+function Itinerary() {
+  const [activeSection, setActiveSection] = useState(0);
+  const filtered = activeSection === 0 ? ITINERARY : ITINERARY.filter((d) => d.section === activeSection);
+  const sections = [
+  { id: 0, label: "All" },
+  { id: 1, label: "Perth→Broome" },
+  { id: 2, label: "Broome→Darwin" },
+  { id: 3, label: "Darwin→Cairns" },
+  { id: 4, label: "Cairns→Brisbane" }];
+
+
+  let currentSection = null;
+  const sectionNames = { 1: "PHASE 1 · PERTH → BROOME", 2: "PHASE 2 · BROOME → DARWIN", 3: "PHASE 3 · DARWIN → CAIRNS", 4: "PHASE 4 · CAIRNS → BRISBANE" };
+
+  return (
+    <section id="itinerary">
+      <div className="inner">
+        <div className="itinerary-header">
+          <div>
+            <div className="section-label">Day by Day</div>
+            <h2 className="section-title">FULL ITINERARY</h2>
+          </div>
+          <div className="section-filter">
+            {sections.map((s) =>
+            <button key={s.id} className={`filter-btn ${activeSection === s.id ? 'active' : ''}`} onClick={() => setActiveSection(s.id)}>{s.label}</button>
+            )}
+          </div>
+        </div>
+        <div className="timeline">
+          {filtered.map((day, i) => {
+            const showHeader = day.section !== currentSection;
+            if (showHeader) currentSection = day.section;
+            return (
+              <React.Fragment key={i}>
+                {showHeader &&
+                <div className="timeline-section-header">
+                    <span className="timeline-sec-label">{sectionNames[day.section]}</span>
+                    <div className="timeline-sec-line"></div>
+                  </div>
+                }
+                <div className="timeline-day">
+                  <div className="day-date">
+                    <div>{day.day.split(' ')[1]}</div>
+                    <div className="month">{day.day.split(' ')[0]}</div>
+                  </div>
+                  <div className="day-thumb">
+                    <img src={day.img} alt={day.route} loading="lazy" />
+                  </div>
+                  <div className="day-info">
+                    <div className="day-route">{day.route}</div>
+                    <div className="day-desc">{day.desc}</div>
+                  </div>
+                  <div className="timeline-day-image">
+                    <img src={day.img} alt={day.route} loading="lazy" />
+                  </div>
+                </div>
+              </React.Fragment>);
+
+          })}
+        </div>
+      </div>
+    </section>);
+
+}
+
+
+// ── ABOUT SECTION ────────────────────────────────────────
+function AboutSection() {
+  return (
+    <section id="about" className="about-section">
+      <div className="inner">
+        <div className="section-label">The Experience</div>
+        <h2 className="section-title">MORE THAN A ROAD TRIP</h2>
+
+        <div className="about-grid">
+          <div className="about-card">
+            <h3>Australia Express</h3>
+            <p>Over 10,000 km of pure adventure across paradise beaches, authentic outback, and unforgettable moments. From the red cliffs of Western Australia to the Great Barrier Reef.</p>
+            <div className="highlights">
+              <span>Paradisiacal beaches</span>
+              <span>Desert & wildlife</span>
+              <span>Unique experiences</span>
+            </div>
+          </div>
+
+          <div className="about-card">
+            <h3>Your Journey</h3>
+            <p>Choose your own adventure. Join from Perth, Darwin, or Cairns. Experience 1, 2, or all 4 phases of the route. Travel with us in a fully equipped motorhome with all the comforts you need.</p>
+            <div className="entry-points">
+              <span>✈️ Perth</span>
+              <span>✈️ Darwin</span>
+              <span>✈️ Cairns</span>
+            </div>
+          </div>
+
+          <div className="about-card">
+            <h3>No Ordinary Tour</h3>
+            <p>This is a family vibe, not a tour. BBQs, games, constant laughs, and the freedom to truly experience Australia. Led by Virginia Sanz, who'll capture every moment for unforgettable memories.</p>
+            <div className="amenities">
+              <span>✔️ Fully equipped motorhome</span>
+              <span>✔️ Professional coordination</span>
+              <span>✔️ Intercultural group</span>
+            </div>
+          </div>
+
+          <div className="about-card">
+            <h3>Limited Spots</h3>
+            <p>Only 5 places available. This exclusivity ensures an intimate, authentic experience. If you want to help drive during the journey, get a special discount.</p>
+            <div className="cta-small">
+              Fill the form to join · Secure your spot now
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── CTA SECTION ─────────────────────────────────────────
+function CTASection() {
+  return (
+    <section id="cta">
+      <div className="cta-label">Next Departure</div>
+      <h2 className="cta-title">READY TO START</h2>
+      <p className="cta-sub">Limited spots · Departure Jun 15, 2026 · Perth, Australia</p>
+      <div className="cta-btns">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdYL_bvD-zfFg1Vd6qRHI7vJEf0zgJw23i0zZLa9hLtRp6FfA/viewform?usp=sharing&ouid=108521149626662395365" className="btn-primary btn-pulse" target="_blank">Book Now</a>
+      </div>
+      <div className="departure-info">
+        <div className="dep-item">
+          <div className="dep-value">43</div>
+          <div className="dep-label">Days</div>
+        </div>
+        <div className="dep-item">
+          <div className="dep-value">7K+</div>
+          <div className="dep-label">Kilometres</div>
+        </div>
+        <div className="dep-item">
+          <div className="dep-value">4</div>
+          <div className="dep-label">Phases</div>
+        </div>
+        <div className="dep-item">
+          <div className="dep-value">5</div>
+          <div className="dep-label">Max Spots</div>
+        </div>
+      </div>
+    </section>);
+
+}
+
+// ── FOOTER ──────────────────────────────────────────────
+function Footer() {
+  return (
+    <footer>
+      <div className="footer-top">
+        <div className="footer-brand">
+          <span className="logo">4<span>ussie</span>Trip</span>
+          <p>Adventure tours across the Australian continent. Small groups, expert guides, authentic experiences.</p>
+        </div>
+        <div className="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="javascript:void(0)">Mail info@4aussietrip.com</a></li>
+            <li><a href="javascript:void(0)">WhatsApp</a></li>
+            <li><a href="javascript:void(0)">Instagram @4ussietrip</a></li>
+            <li><a href="javascript:void(0)">Travel Blog</a></li>
+          </ul>
+        </div>
+      </div>
+      <div className="footer-bottom">
+        <p>© 2026 4ussieTrip. All rights reserved.</p>
+        <p>Perth · Broome · Darwin · Cairns · Brisbane</p>
+      </div>
+    </footer>);
+
+}
+
+// ── TWEAKS PANEL ─────────────────────────────────────────
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accentColor": "#f59e0b",
+  "heroFont": "Bebas Neue",
+  "darkMode": true,
+  "showPrices": false,
+  "cardRadius": 4
+} /*EDITMODE-END*/;
+
+function TweaksApp() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  useEffect(() => {
+    if (!tweaks) return;
+    const root = document.documentElement;
+    root.style.setProperty('--amber', tweaks.accentColor);
+    root.style.setProperty('--amber-dark', tweaks.accentColor);
+    document.querySelectorAll('.sec-title, .hero-title, .section-title, .cta-title').forEach((el) => {
+      el.style.fontFamily = `'${tweaks.heroFont}', sans-serif`;
+    });
+    document.querySelectorAll('.highlight-card, .car-slide').forEach((el) => {
+      el.style.borderRadius = tweaks.cardRadius + 'px';
+    });
+  }, [tweaks]);
+
+  return (
+    <TweaksPanel title="Tweaks">
+      <TweakColor id="accentColor" label="Accent Colour" value={tweaks.accentColor} onChange={(v) => setTweak('accentColor', v)} />
+      <TweakSection label="Typography">
+        <TweakSelect id="heroFont" label="Main Font"
+        value={tweaks.heroFont}
+        options={['Bebas Neue', 'Playfair Display', 'Georgia']}
+        onChange={(v) => setTweak('heroFont', v)} />
+      </TweakSection>
+      <TweakSection label="Design">
+        <TweakSlider id="cardRadius" label="Card Radius" min={0} max={20} step={1} value={tweaks.cardRadius} onChange={(v) => setTweak('cardRadius', v)} />
+      </TweakSection>
+    </TweaksPanel>);
+
+}
+
+// ── MAIN APP ─────────────────────────────────────────────
+function App() {
+  useEffect(() => {
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    const closeMenu = () => {
+      navMenu.classList.remove('mobile-open');
+      menuToggle.classList.remove('open');
+    };
+
+    if (menuToggle && navMenu) {
+      menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('mobile-open');
+        menuToggle.classList.toggle('open');
+      });
+
+      navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Close menu on scroll
+      let lastScrollTop = 0;
+      window.addEventListener('scroll', () => {
+        if (navMenu.classList.contains('mobile-open')) {
+          closeMenu();
+        }
+      }, { passive: true });
+    }
+
+    // Navbar scroll effect
+    const nav = document.getElementById('navbar');
+    const handleScroll = () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <>
+      <TourOverview />
+      <Itinerary />
+      <AboutSection />
+      <CTASection />
+      <Footer />
+      <TweaksApp />
+    </>);
+
+}
+
+const root = ReactDOM.createRoot(document.getElementById('app-root'));
+root.render(<App />);
+</script>
+</body>
+</html>
